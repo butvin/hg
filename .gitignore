@@ -1,0 +1,13 @@
+.idea
+.run
+.DS_Store
+.vscode
+*.swp
+
+volumes/*
+!volumes/.gitkeep
+
+docker/traefik/certs/*
+!docker/traefik/certs/.gitkeep
+
+.env.local
