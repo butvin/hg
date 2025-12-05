@@ -1,0 +1,2 @@
+# Cron jobs for www-data user
+* * * * *   echo "$(date) - cron OK, user - $(whoami)" >> /var/log/cron.log 2>&1
