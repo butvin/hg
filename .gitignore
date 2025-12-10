@@ -1,0 +1,23 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+
+###> custom ###
+.idea
+.run
+.DS_Store
+.vscode
+*.swp
+volumes/*
+!volumes/.gitkeep
+docker/traefik/certs/*
+!docker/traefik/certs/.gitkeep
+###> custom ###
