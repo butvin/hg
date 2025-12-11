@@ -13,8 +13,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    protected function build(ContainerBuilder $container): void
-    {
-        $container->addCompilerPass(new RepositoryCompilerPass());
-    }
+//    protected function build(ContainerBuilder $container): void
+//    {
+//        $container->addCompilerPass(new RepositoryCompilerPass());
+//    }
 }

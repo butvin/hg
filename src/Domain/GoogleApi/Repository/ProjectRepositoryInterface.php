@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Domain\GoogleApi\Repository;
 
 use Domain\GoogleApi\Model\Project;
@@ -9,7 +11,7 @@ interface ProjectRepositoryInterface
 {
     public function getById(int $id): ?Project;
 
-    public function save(Project $project): void;
+    public function save(Project $project): Project;
 
     public function remove(Project $project): void;
 
@@ -20,8 +22,6 @@ interface ProjectRepositoryInterface
 
     public function getByDomain(string $domain): ?Project;
 
-//    public function getSitemapCount(Project $project): int;
-
     /** @return Sitemap[] */
-//    public function getSitemaps(Project $project): array;
+    public function getSitemaps(Project $project): array;
 }

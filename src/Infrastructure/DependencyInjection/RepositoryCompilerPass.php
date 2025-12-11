@@ -18,6 +18,10 @@ class RepositoryCompilerPass implements CompilerPassInterface
                 $interface
             );
 
+//            $implementation = str_replace('Domain\\', 'Infrastructure\\Persistence\\Doctrine\\', $interface);
+//
+//            $implementation = str_replace('RepositoryInterface', 'Repository', $implementation);
+
             if ($container->has($implementation)) {
                 $container
                     ->setAlias($interface, $implementation)

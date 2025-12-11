@@ -1,8 +1,8 @@
 {
-    "name": "butvin/hg",
+    "name": "butvin/hexagonal",
     "type": "project",
     "license": "MIT",
-    "description": "A minimal Symfony project recommended to create bare bones applications",
+    "description": "Hexagonal architecture sample",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {

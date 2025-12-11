@@ -57,6 +57,11 @@ final class Project
         return $this->id;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getScheme(): string
     {
         return $this->scheme;
