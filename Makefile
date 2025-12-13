@@ -37,23 +37,38 @@ ls:
 	docker compose ls -a
 
 
-install: composer migrate about
+install: composer migrate ps
+
+re-fresh: clean fresh
 clean:
 	docker compose down -v --rmi local --remove-orphans
 fresh:
-	docker compose build --no-cache --progress=plain
-	docker compose up -d --force-recreate
-re-fresh: clean fresh
-composer:
+	docker --debug compose build --no-cache --progress=plain
+	docker --debug compose up -d --force-recreate
+
+composer: composer-install composer-clear-cache
+composer-install:
 	docker exec -it $(APP) $(SHELL) -c "composer install --no-interaction -vvv"
+composer-remove-vendor:
+	docker exec -it -u root $(APP) $(SHELL) -c "rm -rf vendor/"
+composer-clear-cache:
+	docker exec -it $(APP) $(SHELL) -c "composer clear-cache --no-interaction -vvv"
+composer-re: composer-remove-vendor composer-clear-cache composer
 composer-rebuild:
-	docker exec -it $(APP) $(SHELL) -c "rm -rf node_modules/"
-	docker exec -it $(APP) $(SHELL) -c "rm -rf vendor/"
 	docker exec -it $(APP) $(SHELL) -c "composer clear-cache --no-interaction -v"
 	docker exec -it $(APP) $(SHELL) -c "composer install --no-interaction --optimize-autoloader -v"
-npm:
+composer-production:
+	docker exec -it $(APP) $(SHELL) -c "composer install --no-dev --no-scripts --optimize-autoloader --prefer-dist --no-interaction --no-progress"
+composer-production-rebuild: composer-remove-vendor composer-production
+npm: npm-install npm-cache-clean
+npm-install:
 	docker exec -it $(APP) $(SHELL) -c "npm install --verbose"
-npm-run-build:
+npm-cache-clean:
+	docker exec -it $(APP) $(SHELL) -c "npm cache clean --force --verbose"
+mpm-remove-node-modules:
+	docker exec -it -u root $(APP) $(SHELL) -c "rm -rf node_modules/"
+npm-re: mpm-remove-node-modules npm-cache-clean npm
+npm-run-build-production:
 	docker exec -it $(APP) $(SHELL) -c "npm run build --verbose"
 
 
@@ -63,7 +78,9 @@ app-none-root:
 	docker exec -it -u www-data $(APP) $(SHELL)
 app-root:
 	docker exec -it -u root $(APP) $(SHELL)
-cron-log:
+app-log:
+	docker logs -f --tail 100 $(APP)
+app-cron-log:
 	docker exec -it $(APP) $(SHELL) -c "tail -n 20 -f /var/log/cron.log"
 database:
 	docker exec -it $(DATABASE) $(SHELL)
@@ -86,7 +103,7 @@ migrate-status:
 migrate-list:
 	docker exec -it $(APP) $(SHELL) -c "php bin/console doctrine:migrations:list -vvv"
 cc:
-	docker exec -it $(APP) $(SHELL) -c "php bin/console c:c -vvv"
+	docker exec -it $(APP) $(SHELL) -c "php bin/console cache:clear -vvv"
 about:
 	docker exec -it $(APP) $(SHELL) -c "php bin/console about -vvv"
 router:
@@ -97,4 +114,4 @@ log-application-container:
 	ssh $(SSH) "docker logs -f --tail=50 ns3.application"
 log-prod-auth:
 	ssh $(SSH) "docker exec -i ns3.application tail -n 20 -f var/log/auth.log"
-log-cron: cron-log
+log-cron: app-cron-log
