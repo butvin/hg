@@ -15,10 +15,6 @@ final class ProjectModel
     /** @var SitemapModel[] */
     private array $sitemaps = [];
 
-    private ?string $createdBy = null;
-
-    private ?bool $active  = null;
-
     private readonly DateTimeInterface $createdAt;
 
     public function __toString(): string
@@ -30,10 +26,7 @@ final class ProjectModel
         private readonly string $scheme,
         private readonly DomainValueObject $domain,
     ) {
-        $this->createdAt = new DateTimeImmutable('now');
-        if (null === $this->active) {
-            $this->active = false;
-        }
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function addSitemap(SitemapModel $sitemap): void
@@ -45,11 +38,6 @@ final class ProjectModel
     public function getSitemaps(): array
     {
         return $this->sitemaps;
-    }
-
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
     }
 
     public function getId(): int
@@ -75,15 +63,5 @@ final class ProjectModel
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function getCreatedBy(): string|null
-    {
-        return $this->createdBy;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->active;
     }
 }
