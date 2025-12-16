@@ -16,7 +16,7 @@ interface ProjectRepositoryInterface
     public function remove(ProjectModel $project): void;
 
     /** @return ProjectModel[] */
-    public function findAllActive(): array;
+    public function findAll(): array;
 
     public function isExistDomain(string $domain): bool;
 

@@ -6,27 +6,25 @@ namespace UI\Http\Controller;
 
 use Application\GoogleApi\CreateProjectService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GoogleApiController
+readonly class GoogleApiController
 {
     public function __construct(
-        private readonly CreateProjectService $service
+        private CreateProjectService $service
     ) {
     }
 
-    public function index(): JsonResponse
-    {
-        return new JsonResponse(['message' => self::class], Response::HTTP_OK);
-    }
-
-    public function create(): JsonResponse
+    public function create(Request $request): JsonResponse
     {
         $project = $this->service->create('https', 'example.com');
 
         return new JsonResponse([
             'message' => sprintf(
-                "Project %s created successfully at %s",
+                "Project#%s %s://%s created successfully at %s",
+                $project->getId(),
+                $project->getScheme(),
                 $project->getDomain(),
                 $project->getCreatedAt()->format('Y-m-d H:i:s')
             ),
