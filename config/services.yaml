@@ -31,7 +31,7 @@ services:
         public: false
         autowire: false
         autoconfigure: false
-        exclude: '../src/Domain/**/*{Entity,Value,Event}.php'
+        exclude: '../src/Domain/**/*{Entity,Model,Value,Object,ValueObject,Event,Service,EntityService,ModelService}.php'
 
-    Domain\GoogleApi\Repository\ProjectRepositoryInterface:
-        class: Infrastructure\GoogleApi\Repository\InMemoryProjectRepository
+#    Domain\GoogleApi\Repository\ProjectRepositoryInterface:
+#        class: Infrastructure\GoogleApi\Repository\InMemoryProjectRepository

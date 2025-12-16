@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\GoogleApi\ValueObject;
 
-final readonly class DomainName
+readonly class DomainValueObject
 {
     private function __construct(private string $value) {}
 
@@ -25,7 +25,7 @@ final readonly class DomainName
         return $this->value;
     }
 
-    public function equals(DomainName $other): bool
+    public function equals(DomainValueObject $other): bool
     {
         return $this->value === $other->value;
     }

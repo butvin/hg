@@ -4,7 +4,7 @@ networks:
 
 services:
   database:
-    image: postgres:13-alpine
+    image: postgres:16-alpine
     container_name: ${COMPOSE_PROJECT_NAME}.database.postgres
     ports:
       - "5432:5432"
@@ -26,7 +26,7 @@ services:
 
   database-slave:
     container_name: ${COMPOSE_PROJECT_NAME}.database.mariadb
-    image: mariadb:10.11.2
+    image: mariadb:10.11.15
     ports:
       - "3306:3306"
     environment:
@@ -103,7 +103,7 @@ services:
 
   rabbitmq:
     container_name: ${COMPOSE_PROJECT_NAME}.rabbitmq
-    image: rabbitmq:4.0.0-management-alpine
+    image: rabbitmq:4.2.1-management-alpine
     ports:
       - "15672:15672"
       - "5672:5672"

@@ -7,7 +7,7 @@ namespace Domain\GoogleApi\Model;
 use DateTimeInterface;
 use DateTimeImmutable;
 
-final class Sitemap
+final class SitemapModel
 {
     private ?int $id = null;
 

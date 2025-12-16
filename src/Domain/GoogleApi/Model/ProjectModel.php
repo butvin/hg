@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Domain\GoogleApi\Model;
 
-use Domain\GoogleApi\ValueObject\DomainName;
+use Domain\GoogleApi\ValueObject\DomainValueObject;
 use DateTimeInterface;
 use DateTimeImmutable;
 
-final class Project
+final class ProjectModel
 {
     private ?int $id = null;
 
-    /** @var Sitemap[] */
+    /** @var SitemapModel[] */
     private array $sitemaps = [];
 
     private ?string $createdBy = null;
@@ -28,7 +28,7 @@ final class Project
 
     public function __construct(
         private readonly string $scheme,
-        private readonly DomainName $domain,
+        private readonly DomainValueObject $domain,
     ) {
         $this->createdAt = new DateTimeImmutable('now');
         if (null === $this->active) {
@@ -36,12 +36,12 @@ final class Project
         }
     }
 
-    public function addSitemap(Sitemap $sitemap): void
+    public function addSitemap(SitemapModel $sitemap): void
     {
         $this->sitemaps[] = $sitemap;
     }
 
-    /** @return Sitemap[] */
+    /** @return SitemapModel[] */
     public function getSitemaps(): array
     {
         return $this->sitemaps;
@@ -67,7 +67,7 @@ final class Project
         return $this->scheme;
     }
 
-    public function getDomain(): DomainName
+    public function getDomain(): DomainValueObject
     {
         return $this->domain;
     }

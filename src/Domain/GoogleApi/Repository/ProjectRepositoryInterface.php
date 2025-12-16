@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Domain\GoogleApi\Repository;
 
-use Domain\GoogleApi\Model\Project;
-use Domain\GoogleApi\Model\Sitemap;
+use Domain\GoogleApi\Model\ProjectModel;
+use Domain\GoogleApi\Model\SitemapModel;
 
 interface ProjectRepositoryInterface
 {
-    public function getById(int $id): ?Project;
+    public function getById(int $id): ?ProjectModel;
 
-    public function save(Project $project): Project;
+    public function save(ProjectModel $project): ProjectModel;
 
-    public function remove(Project $project): void;
+    public function remove(ProjectModel $project): void;
 
-    /** @return Project[] */
+    /** @return ProjectModel[] */
     public function findAllActive(): array;
 
     public function isExistDomain(string $domain): bool;
 
-    public function getByDomain(string $domain): ?Project;
+    public function getByDomain(string $domain): ?ProjectModel;
 
-    /** @return Sitemap[] */
-    public function getSitemaps(Project $project): array;
+    /** @return SitemapModel[] */
+    public function getSitemaps(ProjectModel $project): array;
 }
