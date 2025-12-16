@@ -7,8 +7,6 @@ namespace Application\GoogleApi;
 use Domain\GoogleApi\Model\ProjectModel;
 use Domain\GoogleApi\Repository\ProjectRepositoryInterface;
 use Domain\GoogleApi\ValueObject\DomainValueObject;
-use DomainException;
-use RuntimeException;
 
 final readonly class CreateProjectService
 {
@@ -20,15 +18,15 @@ final readonly class CreateProjectService
     public function create(string $scheme, DomainValueObject|string $domain): ProjectModel
     {
         if ($this->projectRepository->isExistDomain($domain)) {
-            throw new DomainException(sprintf("Project with the domain name: %s already exists", $domain));
+            throw new \DomainException(
+                sprintf("Project with the domain name: %s already exists", $domain)
+            );
         }
 
         try {
-            $project = $this->projectRepository->save(
-                new ProjectModel($scheme, $domain)
-            );
+            $project = $this->projectRepository->save(new ProjectModel($scheme, $domain));
         } catch (\Exception $e) {
-            throw new RuntimeException(sprintf("Project creation failed: %s", $e->getMessage()));
+            throw new \RuntimeException(sprintf("Project creation failed: %s", $e->getMessage()));
         }
 
         return $project;

@@ -7,7 +7,7 @@ namespace UI\Http\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SeRankingController
+class SeRankingController
 {
     public function __construct(
     ) {

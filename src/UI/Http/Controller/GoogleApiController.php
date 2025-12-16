@@ -8,7 +8,7 @@ use Application\GoogleApi\CreateProjectService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GoogleApiController
+class GoogleApiController
 {
     public function __construct(
         private readonly CreateProjectService $service
