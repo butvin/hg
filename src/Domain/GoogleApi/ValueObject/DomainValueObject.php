@@ -10,6 +10,7 @@ use DomainException;
 readonly class DomainValueObject
 {
     private const int DOMAIN_NAME_LENGTH = 3;
+
     private function __construct(private string $value) {}
 
     public static function fromString(string $value): self
