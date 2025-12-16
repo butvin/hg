@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace UI\Http\Controller;
 
 use Application\GoogleApi\CreateProjectService;
+use Application\GoogleApi\Dto\CreateProjectRequestDto;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 readonly class GoogleApiController
 {
@@ -18,11 +21,25 @@ readonly class GoogleApiController
 
     public function create(Request $request): JsonResponse
     {
-        if (null !== $request) {
-            dd($request);
+        $domain = $request->request->get('domain');
+        $scheme = $request->request->get('scheme');
+
+        if (!$domain) {
+            throw new BadRequestHttpException(
+                "Domain parameter is required."
+            );
         }
 
-        $project = $this->service->create('example.com', 'https');
+        try {
+            $project = $this->service->create(
+                new CreateProjectRequestDto(
+                    domain: $domain,
+                    scheme: $scheme,
+                )
+            );
+        } catch (\Throwable $e) {
+            throw new UnprocessableEntityHttpException($e->getMessage());
+        }
 
         return new JsonResponse([
             'message' => sprintf(
