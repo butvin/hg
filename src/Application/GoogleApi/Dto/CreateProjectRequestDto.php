@@ -21,7 +21,7 @@ final readonly class CreateProjectRequestDto
         return $this->domain;
     }
 
-    public function fromArray(array $data): self
+    public static function fromArray(array $data): self
     {
         return new self(
             $data['domain'],

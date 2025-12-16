@@ -21,22 +21,12 @@ readonly class GoogleApiController
 
     public function create(Request $request): JsonResponse
     {
-        $domain = $request->request->get('domain');
-        $scheme = $request->request->get('scheme');
-
-        if (!$domain) {
-            throw new BadRequestHttpException(
-                "Domain parameter is required."
-            );
+        if (!$request->request->get('domain')) {
+            throw new BadRequestHttpException("Domain parameter is required");
         }
 
         try {
-            $project = $this->service->create(
-                new CreateProjectRequestDto(
-                    domain: $domain,
-                    scheme: $scheme,
-                )
-            );
+            $project = $this->service->create(CreateProjectRequestDto::fromArray($request->request->all()));
         } catch (\Throwable $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
