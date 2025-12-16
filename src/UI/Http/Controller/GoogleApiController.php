@@ -18,6 +18,7 @@ readonly class GoogleApiController
 
     public function create(Request $request): JsonResponse
     {
+        dd($request);
         $project = $this->service->create('https', 'example.com');
 
         return new JsonResponse([

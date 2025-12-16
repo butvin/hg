@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace UI\Http\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SpySerpController
@@ -13,8 +14,9 @@ class SpySerpController
     ) {
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+        dd($request);
         return new JsonResponse(['message' => self::class], Response::HTTP_OK);
     }
 }
