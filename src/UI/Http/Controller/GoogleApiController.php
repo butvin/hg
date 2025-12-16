@@ -18,8 +18,11 @@ readonly class GoogleApiController
 
     public function create(Request $request): JsonResponse
     {
-        dd($request);
-        $project = $this->service->create('https', 'example.com');
+        if (null !== $request) {
+            dd($request);
+        }
+
+        $project = $this->service->create('example.com', 'https');
 
         return new JsonResponse([
             'message' => sprintf(

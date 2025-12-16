@@ -11,21 +11,26 @@ use DateTimeImmutable;
 final class ProjectModel
 {
     private ?int $id = null;
+    private readonly string $scheme;
+    private readonly DomainValueObject $domain;
 
     /** @var SitemapModel[] */
     private array $sitemaps = [];
-
     private readonly DateTimeInterface $createdAt;
 
     public function __toString(): string
     {
-        return sprintf("%s://%s", $this->scheme, $this->domain);
+        return sprintf("%s(%s://%s)", self::class, $this->scheme, $this->domain);
     }
 
     public function __construct(
-        private readonly string $scheme,
-        private readonly DomainValueObject $domain,
+        DomainValueObject $domain,
+        ?string $scheme = null,
     ) {
+        if (null === $scheme) {
+            $this->scheme = 'https';
+        }
+        $this->domain = $domain;
         $this->createdAt = new DateTimeImmutable();
     }
 
