@@ -12,7 +12,7 @@ use Throwable;
 use DomainException;
 use RuntimeException;
 
-final readonly class CreateProjectService
+final readonly class CreateProjectUseCase
 {
     public function __construct(
         private ProjectRepositoryInterface $projectRepository,

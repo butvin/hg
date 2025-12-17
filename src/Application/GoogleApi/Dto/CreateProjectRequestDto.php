@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Application\GoogleApi\Dto;
 
 final readonly class CreateProjectRequestDto

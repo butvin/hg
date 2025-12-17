@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace UI\Http\Controller;
 
-use Application\GoogleApi\CreateProjectService;
+use Application\GoogleApi\CreateProjectUseCase;
 use Application\GoogleApi\Dto\CreateProjectRequestDto;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 readonly class GoogleApiController
 {
     public function __construct(
-        private CreateProjectService $service
+        private CreateProjectUseCase $service
     ) {
     }
 

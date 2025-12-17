@@ -16,7 +16,6 @@ class SpySerpController
 
     public function index(Request $request): JsonResponse
     {
-        dd($request);
         return new JsonResponse(['message' => self::class], Response::HTTP_OK);
     }
 }
