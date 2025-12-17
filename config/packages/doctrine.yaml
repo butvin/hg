@@ -14,12 +14,34 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: false
         mappings:
-            App:
+#            App:
+#                type: attribute
+#                is_bundle: false
+#                dir: '%kernel.project_dir%/src/Entity'
+#                prefix: 'App\Entity'
+#                alias: App
+
+            GoogleApi:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/GoogleApi'
+                prefix: 'Infrastructure\Persistence\Doctrine\GoogleApi'
+                alias: GoogleApi
+
+#            SpySerp:
+#                is_bundle: false
+#                type: attribute
+#                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/SpySerp'
+#                prefix: 'Infrastructure\Persistence\Doctrine\SpySerp'
+#                alias: SpySerp
+
+#            SeRanking:
+#                is_bundle: false
+#                type: attribute
+#                dir: '%kernel.project_dir%/src/Infrastructure/Persistence/Doctrine/SeRanking'
+#                prefix: 'Infrastructure\Persistence\Doctrine\SeRanking'
+#                alias: SeRanking
+
         controller_resolver:
             auto_mapping: false
 

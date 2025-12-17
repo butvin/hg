@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Domain\GoogleApi\Model;
+namespace Domain\GoogleApi\Entity;
 
 use DateTimeInterface;
 use DateTimeImmutable;
 
-final class SitemapModel
+final class Sitemap
 {
     private ?int $id = null;
 
