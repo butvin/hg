@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\SeRanking\Model;
+namespace Domain\SeRanking\Entity;
 
-class ProjectModel
+class Project
 {
     private ?int $id = null;
 }

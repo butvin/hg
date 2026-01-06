@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\SpySerp\Model;
+namespace Domain\SpySerp\Entity;
 
-class ProjectModel
+class Project
 {
     private ?int $id = null;
 }
