@@ -1,2 +1,10 @@
-# Cron jobs for www-data user
+# Cronjobs tasks for www-data user
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+### Testing cronjob task
 * * * * *   echo "$(date) - cron OK, user - $(whoami)" >> /var/log/cron.log 2>&1
+
+### Logs rotation: clean old logs older than 30 days 
+### Runs weekly on Sunday at 02:00
+0 2 * * 0   find ${LOG_DIR} -name "*.log" -type f -mtime +30 -delete 2>/dev/null || true
