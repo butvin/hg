@@ -1,8 +1,16 @@
 {
     "name": "butvin/hexagonal",
+    "description": "A set of hexagonal architecture samples is packaged in an unremarkable box",
+    "authors": [
+        {
+          "name": "Serhii Butvin",
+          "email": "butvin.develop@gmail.com",
+          "homepage": "https://github.com/butvin",
+          "role": "PHP Developer"
+        }
+      ],
     "type": "project",
     "license": "MIT",
-    "description": "Hexagonal architecture sample",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
