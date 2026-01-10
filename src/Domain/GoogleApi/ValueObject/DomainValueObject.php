@@ -19,7 +19,7 @@ readonly class DomainValueObject
 
         if (strlen($value) < self::DOMAIN_NAME_LENGTH) {
             throw new InvalidArgumentException(
-                sprintf("Domain name '%s' must be more than 3 symbol", $value)
+                sprintf('Domain name %s must be more than 3 symbol', $value)
             );
         }
 
@@ -28,7 +28,7 @@ readonly class DomainValueObject
                 $value
             )) {
             throw new DomainException(
-                sprintf("Invalid domain name format: %s", $value)
+                sprintf('Invalid domain name format: %s', $value)
             );
         }
 
@@ -40,7 +40,7 @@ readonly class DomainValueObject
         return $this->value;
     }
 
-    public function equals(DomainValueObject $other): bool
+    public function equals(self $other): bool
     {
         return $this->value === $other->value;
     }

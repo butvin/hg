@@ -21,3 +21,8 @@ volumes/*
 docker/traefik/certs/*
 !docker/traefik/certs/.gitkeep
 ###> custom ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

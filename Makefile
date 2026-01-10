@@ -1,5 +1,7 @@
 SHELL=/bin/sh
 
+
+
 ifndef COMPOSE_PROJECT_NAME
 	include .env
 	ifneq ("$(wildcard .env.local)","")
@@ -8,9 +10,11 @@ ifndef COMPOSE_PROJECT_NAME
 endif
 
 
+
 DATABASE=${COMPOSE_PROJECT_NAME}.database.postgres
 DATABASE_SLAVE=${COMPOSE_PROJECT_NAME}.database.mariadb
 APP=${COMPOSE_PROJECT_NAME}.application
+
 
 
 logs:
@@ -37,14 +41,17 @@ ls:
 	docker compose ls -a
 
 
-install: composer migrate ps
 
+install: composer migrate ps
 re-fresh: clean fresh
 clean:
 	docker compose down -v --rmi local --remove-orphans
 fresh:
 	docker --debug compose build --no-cache --progress=plain
 	docker --debug compose up -d --force-recreate
+
+
+
 
 composer: composer-install composer-clear-cache
 composer-install:
@@ -72,6 +79,7 @@ npm-run-build-production:
 	docker exec -it $(APP) $(SHELL) -c "npm run build --verbose"
 
 
+
 app:
 	docker exec -it $(APP) $(SHELL)
 app-none-root:
@@ -89,11 +97,20 @@ database-cli:
 database-slave-cli:
 	docker exec -it $(DATABASE) $(SHELL) -c "mysql -u $(MYSQL_USER) -p$(MYSQL_PASSWORD) -P $(MYSQL_PORT) $(MYSQL_DATABASE)"
 database-dump-production:
-	ssh $(SSH) "docker exec -i ns3.database.postgres pg_dump -F p -U postgres -W ns3_db" > ./dump_ns3.sql
+	ssh $(SSH) "docker exec -i ns3.database.postgres pg_dump -F p -U $(POSTGRES_USER) -W $(POSTGRES_DB)" > ./dump.sql
 database-import:
-	docker exec -it $(DATABASE) $(SHELL) -c "psql -U $(POSTGRES_USER) -W -d $(POSTGRES_DB) -f /var/lib/postgresql/data/dump_ns3.sql"
+	docker exec -it $(DATABASE) $(SHELL) -c "psql -U $(POSTGRES_USER) -W -d $(POSTGRES_DB) -f /var/lib/postgresql/data/dump.sql"
 database-inside-container:
 	psql -U postgres -W -d ns3_db -f /var/lib/postgresql/data/dump_ns3.sql
+database-dump-production:
+	ssh $(SSH) "docker exec -i $(DATABASE) pg_dump -F p -U $(POSTGRES_USER) -W $(POSTGRES_DB)" > ./dump.sql
+database-import-dump:
+	docker exec -i $(DATABASE) $(SHELL) -c "psql -U $(POSTGRES_USER) -W -d $(POSTGRES_DB) -f /var/lib/postgresql/data/dump.sql"
+_database-force-kill-all-sessions:
+	docker exec -it $(DATABASE) psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$(POSTGRES_DB)' AND pid <> pg_backend_pid();"
+_database-truncate-all-drop-database:
+	docker exec -it $(DATABASE) psql -U postgres -c "DROP DATABASE $(POSTGRES_DB) WITH (FORCE);"
+
 
 
 migrate:
@@ -108,6 +125,7 @@ about:
 	docker exec -it $(APP) $(SHELL) -c "php bin/console about -vvv"
 router:
 	docker exec -it $(APP) $(SHELL) -c "php bin/console debug:router -vvv"
+
 
 
 log-application-container:
