@@ -133,3 +133,11 @@ log-application-container:
 log-prod-auth:
 	ssh $(SSH) "docker exec -i ns3.application tail -n 20 -f var/log/auth.log"
 log-cron: app-cron-log
+
+
+
+cs-fix:
+	docker exec -it $(APP) $(SHELL) -c "vendor/bin/php-cs-fixer fix --dry-run --diff -vvv"
+	#docker exec -it $(APP) $(SHELL) -c "vendor/bin/php-cs-fixer fix src/Security --dry-run --diff --allow-risky=yes --using-cache=no -vvv"
+auth_logs:
+	docker exec -it $(APP) $(SHELL) tail -f var/log/auth.log -n 420
