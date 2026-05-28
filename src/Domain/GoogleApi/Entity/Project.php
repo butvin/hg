@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Domain\GoogleApi\Entity;
 
 use Domain\GoogleApi\ValueObject\DomainValueObject;
-use DateTimeInterface;
-use DateTimeImmutable;
 
 final class Project
 {
@@ -16,11 +14,11 @@ final class Project
 
     /** @var Sitemap[] */
     private array $sitemaps = [];
-    private readonly DateTimeInterface $createdAt;
+    private readonly \DateTimeInterface $createdAt;
 
     public function __toString(): string
     {
-        return sprintf("%s(%s://%s)", self::class, $this->scheme, $this->domain);
+        return sprintf('%s(%s://%s)', self::class, $this->scheme, $this->domain);
     }
 
     public function __construct(
@@ -31,7 +29,7 @@ final class Project
             $this->scheme = 'https';
         }
         $this->domain = $domain;
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function addSitemap(Sitemap $sitemap): void
@@ -65,7 +63,7 @@ final class Project
         return $this->domain;
     }
 
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }

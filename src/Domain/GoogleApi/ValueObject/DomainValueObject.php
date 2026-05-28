@@ -11,7 +11,9 @@ readonly class DomainValueObject
 {
     private const int DOMAIN_NAME_LENGTH = 3;
 
-    private function __construct(private string $value) {}
+    private function __construct(private string $value)
+    {
+    }
 
     public static function fromString(string $value): self
     {
@@ -23,7 +25,7 @@ readonly class DomainValueObject
             );
         }
 
-        if (!filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) && !preg_match(
+        if (!filter_var($value, \FILTER_VALIDATE_DOMAIN, \FILTER_FLAG_HOSTNAME) && !preg_match(
                 '/^[a-z0-9.-]+$/',
                 $value
             )) {

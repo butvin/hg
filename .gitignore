@@ -1,16 +1,15 @@
-
-###> symfony/framework-bundle ###
+# Root .gitignore file
+.env.local
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/var/
-/vendor/
-###< symfony/framework-bundle ###
+/var
+/vendor
 
 
-###> custom ###
+
 .idea
 .run
 .DS_Store

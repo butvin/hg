@@ -28,7 +28,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}.database.mariadb
     image: mariadb:10.11.15
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -39,8 +39,8 @@ services:
       TZ: ${TZ}
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     volumes:
-      - ./docker/database/mariadb/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
       - ./volumes/mariadb:/var/lib/mysql
+      - ./docker/database/mariadb/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
     healthcheck:
       test: [ "CMD-SHELL", "mysqladmin ping -h ${MYSQL_HOST} -u root -p${MYSQL_ROOT_PASSWORD} || exit 1" ]
       interval: 10s
@@ -98,7 +98,7 @@ services:
     networks:
       - default
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
     restart: unless-stopped
 
   rabbitmq:
@@ -127,11 +127,13 @@ services:
       retries: 3
     networks:
       - default
-    restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    restart: always
 
   traefik:
     container_name: ${COMPOSE_PROJECT_NAME}.traefik
-    image: traefik:3.2.0
+    image: traefik:3.6.7
     ports:
       - "80:80"
       - "443:443"
@@ -152,3 +154,30 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     restart: unless-stopped
+
+
+
+#  database-slave-second:
+#    container_name: ${COMPOSE_PROJECT_NAME}.database.mariadb
+#    image: mariadb:10.11.2
+#    ports:
+#      - "${MYSQL_PORT}:${MYSQL_PORT}"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#      MYSQL_DATABASE: ${MYSQL_DATABASE}
+#      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#      MYSQL_USER: ${MYSQL_USER}
+#      MYSQL_HOST: ${MYSQL_HOST}
+#      MYSQL_PORT: ${MYSQL_PORT}
+#    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
+#    volumes:
+#      - ./volumes/mariadb:/var/lib/mysql
+#    healthcheck:
+#      test: [ "CMD-SHELL", "mysqladmin ping -h ${MYSQL_HOST} -u root -p${MYSQL_ROOT_PASSWORD} || exit 1" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 30s
+#    networks:
+#      - default
+#    restart: unless-stopped

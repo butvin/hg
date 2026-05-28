@@ -8,8 +8,7 @@ use Symfony\Component\HttpKernel\HttpClientKernel;
 
 class GoogleApiClient
 {
-    public function __construct(
-        HttpClientKernel $httpClient
-    ) {
+    public function __construct(HttpClientKernel $httpClient)
+    {
     }
 }
